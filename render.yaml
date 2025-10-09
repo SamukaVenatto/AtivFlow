@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: ativflow
+    env: python
+    buildCommand: "pip install -r requirements.txt && cd frontend && npm install && npm run build && cp -r dist/* ../backend/src/static/"
+    startCommand: "cd backend && python src/main.py"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0

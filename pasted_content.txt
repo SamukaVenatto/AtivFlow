@@ -1,0 +1,140 @@
+🧩 Prompt Manus – Continuação de Desenvolvimento do ERP Acadêmico “AtivFlow”
+🧠 Contexto
+
+O AtivFlow é um sistema ERP acadêmico desenvolvido em Flask (backend) e React/Vite (frontend), hospedado no Render, com banco de dados PostgreSQL (produção) e SQLite (dev).
+O projeto está estruturado modularmente em Blueprints e já possui funcionalidades básicas implementadas, como autenticação, cadastro de alunos, atividades, entregas, grupos e dashboard.
+
+O código-fonte está disponível em:
+👉 https://github.com/SamukaVenatto/AtivFlow
+
+🎯 Objetivo
+
+Dar prosseguimento ao desenvolvimento das funcionalidades que estão em fase de implementação e integrar recursos parcialmente concluídos (como o módulo de FollowUp e uploads de arquivos), sem alterar o que já está funcionando.
+
+O foco é expandir o backend Flask, garantindo compatibilidade com o frontend atual e a arquitetura existente.
+
+⚙️ Tarefas
+🧩 1. Integração do módulo FollowUp com autenticação real
+
+Substituir o uso de X-USER-ID e X-ADMIN por autenticação via session (Flask).
+
+Criar decoradores auxiliares:
+
+@login_required → exige sessão autenticada.
+
+@professor_required → exige perfil de professor.
+
+Atualizar o módulo follow_up.py para utilizar essas verificações.
+
+Integrar FollowUp ao fluxo de login (auth.py) e dashboard.
+
+🧩 2. Sistema de avaliação e feedback em entregas
+
+Atualizar o modelo Entrega:
+
+Adicionar campos feedback (texto), nota (float), avaliado_por (int).
+
+Criar rota:
+
+PUT /api/entregas/<id>/avaliar
+
+
+Corpo esperado:
+
+{
+  "feedback": "Texto do feedback",
+  "nota": 9.5,
+  "status": "revisado"
+}
+
+
+Atualizar dashboard para exibir quantidade de entregas revisadas e notas médias.
+
+🧩 3. Implementar upload de arquivos
+
+Adicionar campo arquivo_url em Entrega.
+
+Criar endpoint POST /api/entregas/upload com suporte a multipart/form-data.
+
+Armazenar arquivos em static/uploads e retornar URL pública.
+
+Permitir envio apenas se tipo da atividade for "upload".
+
+🧩 4. Implementar atividades do tipo múltipla escolha
+
+Criar modelo Questao com os campos:
+
+atividade_id, pergunta, opcoes (JSON), resposta_correta.
+
+Permitir criação e edição de questões pelo professor.
+
+Permitir que alunos respondam e o sistema corrija automaticamente.
+
+Armazenar nota automática na tabela de entregas.
+
+Exibir no dashboard taxa de acertos e desempenho médio.
+
+🧩 5. Criação automática de entregas em atividades individuais
+
+Ao criar uma atividade com tipo "individual", gerar automaticamente entregas “pendentes” para todos os alunos ativos.
+
+Isso deve ocorrer dentro do endpoint POST /api/atividades.
+
+🧩 6. Sistema básico de notificações
+
+Criar função utilitária:
+
+enviar_notificacao(destinatario_id, titulo, mensagem)
+
+
+(pode ser apenas log inicialmente).
+
+Gerar notificações para eventos:
+
+Criação de nova atividade.
+
+Entrega realizada.
+
+Avaliação concluída.
+
+Registrar notificações em tabela Notificacao (id, usuario_id, titulo, mensagem, lida, data_criacao).
+
+✅ Critérios de Aceite
+
+Nenhuma funcionalidade existente deve ser quebrada.
+
+Todos os novos endpoints devem:
+
+Retornar JSON padronizado (success, message, error).
+
+Ser protegidos por autenticação quando aplicável.
+
+Todos os novos modelos devem ter método to_dict().
+
+O sistema deve inicializar sem erros via main.py.
+
+Scripts de teste (init_database) devem incluir dados básicos para validação.
+
+Código deve seguir a convenção existente (sem alterar rotas ou imports originais).
+
+📦 Entregas Esperadas
+
+Código atualizado com novos endpoints e modelos implementados.
+
+Atualização do arquivo README.md com exemplos de uso das novas rotas.
+
+Scripts de inicialização compatíveis (init_database funcional).
+
+Logs ou prints de teste comprovando funcionamento das novas rotas.
+
+Compatibilidade confirmada com o frontend React (nenhuma quebra nas rotas atuais).
+
+💡 Notas Finais
+
+Não alterar ou remover endpoints existentes.
+
+Manter nomes e padrões de URL conforme já registrados em main.py.
+
+Caso surjam dependências adicionais (ex: Flask-Uploads), registrar no requirements.txt.
+
+Todo código novo deve estar comentado e seguir o padrão de docstring dos módulos atuais.

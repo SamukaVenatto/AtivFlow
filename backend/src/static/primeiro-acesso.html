@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AtivFlow - Primeiro Acesso</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        h2 {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .mensagem {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .sucesso {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .erro {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>AtivFlow - Primeiro Acesso</h2>
+        <p>Defina sua senha para acessar o sistema.</p>
+        
+        <input type="email" id="email" placeholder="Seu e-mail institucional (ex: joao@aluno.com)" required>
+        <input type="password" id="senha" placeholder="Nova senha (mínimo 6 caracteres)" required>
+        <input type="password" id="confirmar" placeholder="Confirmar senha" required>
+        <button onclick="definirSenha()">Definir Senha</button>
+        
+        <div id="mensagem"></div>
+    </div>
+
+    <script>
+        async function definirSenha() {
+            const email = document.getElementById('email').value.trim();
+            const senha = document.getElementById('senha').value;
+            const confirmar = document.getElementById('confirmar').value;
+            const msg = document.getElementById('mensagem');
+
+            msg.textContent = '';
+            msg.className = '';
+
+            if (!email) {
+                msg.className = 'mensagem erro';
+                msg.textContent = 'Por favor, informe seu e-mail.';
+                return;
+            }
+
+            if (senha.length < 6) {
+                msg.className = 'mensagem erro';
+                msg.textContent = 'A senha deve ter pelo menos 6 caracteres.';
+                return;
+            }
+
+            if (senha !== confirmar) {
+                msg.className = 'mensagem erro';
+                msg.textContent = 'As senhas não coincidem.';
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/auth/primeiro-acesso', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, senha })
+                });
+
+                const data = await res.json();
+                
+                if (res.ok) {
+                    msg.className = 'mensagem sucesso';
+                    msg.textContent = data.sucesso || 'Senha definida com sucesso!';
+                    setTimeout(() => window.location.href = '/', 2000);
+                } else {
+                    msg.className = 'mensagem erro';
+                    msg.textContent = data.erro || 'Erro ao definir senha.';
+                    console.error('Erro do servidor:', data);
+                }
+            } catch (error) {
+                msg.className = 'mensagem erro';
+                msg.textContent = 'Erro de rede. Verifique sua conexão.';
+                console.error('Erro de rede:', error);
+            }
+        }
+    </script>
+</body>
+</html>
