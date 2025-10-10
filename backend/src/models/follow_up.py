@@ -1,7 +1,7 @@
 # backend/src/models/follow_up.py
 
 from datetime import datetime
-from src.database_config import db
+from . import db
 
 class FollowUp(db.Model):
     __tablename__ = 'follow_up'

@@ -1,5 +1,5 @@
 from datetime import datetime
-from src.database_config import db
+from . import db
 
 class Entrega(db.Model):
     __tablename__ = 'entregas'
