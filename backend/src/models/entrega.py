@@ -10,16 +10,12 @@ class Entrega(db.Model):
     data_entrega = db.Column(db.DateTime, default=datetime.utcnow)
     entregue = db.Column(db.Boolean, default=False)
     justificativa = db.Column(db.Text)
-    status = db.Column(db.String(20), default='pendente')  # pendente/entregue/atrasado/em_analise/revisado
+    status = db.Column(db.String(20), default='pendente')  # pendente, entregue, atrasado
     funcao_responsabilidade = db.Column(db.String(200))
     
-    # Campos de avaliação
-    feedback = db.Column(db.Text)  # Feedback do professor
-    nota = db.Column(db.Float)  # Nota da entrega
-    avaliado_por = db.Column(db.Integer, db.ForeignKey('professores.id'))  # Professor que avaliou
-    data_avaliacao = db.Column(db.DateTime)  # Data da avaliação
-    arquivo_url = db.Column(db.String(500))  # URL do arquivo enviado
+    # ⚠️ REMOVIDOS: feedback, nota, avaliado_por, data_avaliacao (não existem no banco)
     
+    arquivo_url = db.Column(db.String(500))  # opcional, mantido caso queira usar depois
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
@@ -33,10 +29,7 @@ class Entrega(db.Model):
             'justificativa': self.justificativa,
             'status': self.status,
             'funcao_responsabilidade': self.funcao_responsabilidade,
-            'feedback': self.feedback,
-            'nota': self.nota,
-            'avaliado_por': self.avaliado_por,
-            'data_avaliacao': self.data_avaliacao.isoformat() if self.data_avaliacao else None,
+            # ⚠️ Removidos os campos que não existem
             'arquivo_url': self.arquivo_url,
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
