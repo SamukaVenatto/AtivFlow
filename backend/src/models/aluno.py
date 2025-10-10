@@ -1,5 +1,5 @@
 from datetime import datetime
-from . import db
+from src.database_config import db
 
 class Aluno(db.Model):
     __tablename__ = 'alunos'

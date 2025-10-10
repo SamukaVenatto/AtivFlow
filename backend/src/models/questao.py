@@ -1,5 +1,5 @@
 from datetime import datetime
-from . import db
+from src.database_config import db
 import json
 
 class Questao(db.Model):

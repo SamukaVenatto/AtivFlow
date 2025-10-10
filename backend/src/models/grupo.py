@@ -1,5 +1,5 @@
 from datetime import datetime
-from . import db
+from src.database_config import db
 
 class Grupo(db.Model):
     __tablename__ = 'grupos'
