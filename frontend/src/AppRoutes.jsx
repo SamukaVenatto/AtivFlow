@@ -1,8 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
-import Navigation from './components/Navigation';
-import Header from './components/Header';
+import Layout from './components/Layout';
 
 // Páginas de autenticação
 import Login from './pages/Login';
@@ -48,20 +47,12 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   return children;
 };
 
-// Layout principal
+// Layout principal usando Layout.jsx
 const MainLayout = ({ children }) => {
-  const { user } = useAuth();
-
   return (
-    <div className="flex h-screen bg-gray-50">
-      <Navigation userType={user?.tipo_usuario} />
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <Header />
-        <main className="flex-1 overflow-y-auto">
-          {children}
-        </main>
-      </div>
-    </div>
+    <Layout>
+      {children}
+    </Layout>
   );
 };
 
