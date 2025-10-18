@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: ativflow-backend
+    env: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: gunicorn "backend.app:create_app()"
+    preDeployCommand: cd backend && flask db upgrade
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: DEBUG
+        value: False
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ativflow-db
+          property: connectionString
+      - key: FRONTEND_URL
+        value: https://ativflow-frontend.onrender.com
+      - key: STORAGE_PROVIDER
+        value: local
+
+  - type: web
+    name: ativflow-frontend
+    env: static
+    buildCommand: pnpm install && pnpm build
+    staticPublishPath: frontend/dist
+    rootDir: frontend
+    plan: free
+    envVars:
+      - key: VITE_API_URL
+        value: https://ativflow-backend.onrender.com/api
+
+databases:
+  - name: ativflow-db
+    plan: free
