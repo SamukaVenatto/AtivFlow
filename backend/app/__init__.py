@@ -59,9 +59,11 @@ def create_app(config_name='default'):
     app.register_blueprint(notificacoes.bp)
     app.register_blueprint(relatorios.bp)
     
-    # Importar modelos para que o Flask-Migrate os reconheça
+    # Importar modelos e criar tabelas se necessário
     with app.app_context():
         from app import models
+        db.create_all()  # <-- Cria as tabelas automaticamente se não existirem
+
         from app.models import Usuario
 
         # --- Criação automática de usuários de teste ---
@@ -84,6 +86,7 @@ def create_app(config_name='default'):
             db.session.add(aluno)
 
         db.session.commit()
-        print("Usuários de teste verificados/criados com sucesso.")
+        print("Banco e usuários de teste verificados/criados com sucesso.")
 
     return app
+
