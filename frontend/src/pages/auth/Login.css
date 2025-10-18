@@ -1,0 +1,110 @@
+/* === Login.css === */
+
+/* Fundo com degradê suave em tons azulados */
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #f9fafc 0%, #e3f2fd 50%, #ffffff 100%);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  animation: fadeIn 1.5s ease forwards;
+}
+
+/* Animação de entrada suave */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Container principal */
+.login-container {
+  background-color: #fff;
+  width: 100%;
+  max-width: 400px;
+  padding: 40px 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: all 0.3s ease;
+  animation: fadeInUp 1s ease;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.login-container:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Logo e título */
+.login-logo {
+  width: 160px;
+  margin-bottom: 10px;
+}
+
+.login-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #003366;
+  margin-bottom: 20px;
+}
+
+/* Inputs */
+.login-input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.2s ease;
+}
+
+.login-input:focus {
+  border-color: #003366;
+  outline: none;
+}
+
+/* Botão com gradiente animado */
+.login-button {
+  width: 100%;
+  background: linear-gradient(90deg, #003366, #f7a022);
+  background-size: 200% 100%;
+  color: white;
+  border: none;
+  padding: 10px 0;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-position 0.5s ease;
+}
+
+.login-button:hover {
+  background-position: 100% 0;
+}
+
+/* Texto auxiliar */
+.login-links {
+  font-size: 13px;
+  color: #555;
+  margin-top: 20px;
+}
+
+.login-links strong {
+  color: #003366;
+}
+
+.error-message {
+  color: #d9534f;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
