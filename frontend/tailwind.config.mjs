@@ -1,5 +1,3 @@
-import { createThemes } from 'tw-colors';
-
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -9,12 +7,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        'senac-blue': '#003366',
-        'senac-blue-dark': '#002244',
-        'senac-blue-light': '#0066cc',
-        'senac-gray': '#6b7280',
-        'senac-gray-light': '#f3f4f6',
-        'senac-gray-dark': '#374151',
+        // usa nomes compatíveis com Tailwind padrão
+        primary: {
+          DEFAULT: "#003366",
+          dark: "#002244",
+          light: "#0066cc",
+        },
+        neutral: {
+          DEFAULT: "#6b7280",
+          light: "#f3f4f6",
+          dark: "#374151",
+        },
       },
     },
   },
