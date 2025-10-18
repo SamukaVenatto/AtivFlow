@@ -30,9 +30,12 @@ def create_app(config_name='default'):
     migrate.init_app(app, db)
     limiter.init_app(app)
     
-    # Configurar CORS
+    # Definir origem permitida para o frontend no Render
+    frontend_url = app.config.get("FRONTEND_URL", "https://ativflow-frontend.onrender.com")
+    
+    # Configurar CORS com domínio fixo e suporte a credenciais
     CORS(app, 
-         origins=[app.config['FRONTEND_URL']], 
+         resources={r"/*": {"origins": [frontend_url]}},
          supports_credentials=True,
          allow_headers=['Content-Type', 'Authorization', 'X-CSRF-Token'],
          methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'])
@@ -41,7 +44,10 @@ def create_app(config_name='default'):
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
     
     # Registrar blueprints (rotas)
-    from app.routes import auth, usuarios, atividades, entregas, grupos, questoes, followups, notificacoes, relatorios
+    from app.routes import (
+        auth, usuarios, atividades, entregas,
+        grupos, questoes, followups, notificacoes, relatorios
+    )
     
     app.register_blueprint(auth.bp)
     app.register_blueprint(usuarios.bp)
@@ -56,6 +62,28 @@ def create_app(config_name='default'):
     # Importar modelos para que o Flask-Migrate os reconheça
     with app.app_context():
         from app import models
-    
-    return app
+        from app.models import Usuario
 
+        # --- Criação automática de usuários de teste ---
+        if not Usuario.query.filter_by(email="maria.santos@senac.edu.br").first():
+            prof = Usuario(
+                nome="Maria Santos",
+                email="maria.santos@senac.edu.br",
+                tipo="professor"
+            )
+            prof.set_password("Prof@123")
+            db.session.add(prof)
+
+        if not Usuario.query.filter_by(email="samuel.ribeiro@adm321530.com").first():
+            aluno = Usuario(
+                nome="Samuel Ribeiro",
+                email="samuel.ribeiro@adm321530.com",
+                tipo="aluno"
+            )
+            aluno.set_password("Aluno@123")
+            db.session.add(aluno)
+
+        db.session.commit()
+        print("Usuários de teste verificados/criados com sucesso.")
+
+    return app
