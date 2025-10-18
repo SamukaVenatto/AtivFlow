@@ -12,7 +12,4 @@ WeasyPrint==60.1
 pytest==7.4.3
 pytest-flask==1.3.0
 gunicorn==21.2.0
-<<<<<<< HEAD
 
-=======
->>>>>>> a0a38da (Inserir o arquivo gunicorn na requirements.txt)
