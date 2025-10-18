@@ -1,0 +1,407 @@
+{
+	"info": {
+		"_postman_id": "c1a2b3c4-d5e6-7890-1234-567890abcdef",
+		"name": "AtivFlow API Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"description": "Coleção de endpoints da API do AtivFlow para testes e documentação."
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login Professor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"maria.santos@senac.edu.br\",\n    \"senha\": \"Prof@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/auth/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Faz login como professor. Define o cookie de sessão."
+					},
+					"response": []
+				},
+				{
+					"name": "Login Aluno",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"samuel.ribeiro@adm321530.com\",\n    \"senha\": \"Aluno@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/auth/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Faz login como aluno. Define o cookie de sessão."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/auth/logout",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						},
+						"description": "Faz logout do usuário atual."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current User (Me)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/auth/me",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"me"
+							]
+						},
+						"description": "Obtém informações do usuário logado."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Alunos",
+			"item": [
+				{
+					"name": "Listar Alunos (Professor)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/alunos?turma=321530",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"alunos"
+							],
+							"query": [
+								{
+									"key": "turma",
+									"value": "321530"
+								}
+							]
+						},
+						"description": "Lista alunos da turma 321530. Requer autenticação de professor."
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Aluno (Professor)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome_completo\": \"Novo Aluno Teste\",\n    \"curso\": \"Logística\",\n    \"turma\": \"321530\",\n    \"senha\": \"Senha123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/alunos/",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"alunos",
+								""
+							]
+						},
+						"description": "Cria um novo aluno. Requer autenticação de professor."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Atividades",
+			"item": [
+				{
+					"name": "Listar Atividades (Aluno/Professor)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/atividades",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"atividades"
+							]
+						},
+						"description": "Lista atividades. Alunos veem apenas as da sua turma. Requer autenticação."
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Atividade (Professor)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"titulo\": \"Trabalho 1 - Planejamento\",\n    \"descricao\": \"Desenvolver plano...\",\n    \"tipo\": \"grupo\",\n    \"prazo\": \"2025-12-30T23:59:00Z\",\n    \"turma\": \"321530\",\n    \"config_json\": {\"max_arquivos\":3,\"tamanho_max_mb\":10}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/atividades/",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"atividades",
+								""
+							]
+						},
+						"description": "Cria uma nova atividade. Requer autenticação de professor."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Entregas",
+			"item": [
+				{
+					"name": "Upload de Entrega (Aluno)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "atividade_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "observacoes",
+									"value": "Minha entrega para a atividade individual.",
+									"type": "text"
+								},
+								{
+									"key": "arquivos[]",
+									"type": "file",
+									"src": "/path/to/your/file.pdf" // Substituir pelo caminho real do arquivo
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/entregas/upload",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"entregas",
+								"upload"
+							]
+						},
+						"description": "Envia uma entrega para uma atividade. Requer autenticação de aluno."
+					},
+					"response": []
+				},
+				{
+					"name": "Avaliar Entrega (Professor)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nota\": 9.5,\n    \"feedback\": \"Excelente trabalho!\",\n    \"rejeitado\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/entregas/1/avaliar",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"entregas",
+								"1",
+								"avaliar"
+							]
+						},
+						"description": "Avalia uma entrega específica. Requer autenticação de professor."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Relatórios",
+			"item": [
+				{
+					"name": "Relatório de Desempenho (PDF)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/relatorios/desempenho?turma=321530&formato=pdf",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"relatorios",
+								"desempenho"
+							],
+							"query": [
+								{
+									"key": "turma",
+									"value": "321530"
+								},
+								{
+									"key": "formato",
+									"value": "pdf"
+								}
+							]
+						},
+						"description": "Gera relatório de desempenho em PDF para a turma 321530. Requer autenticação de professor."
+					},
+					"response": []
+				},
+				{
+					"name": "Relatório de Desempenho (XLSX)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/relatorios/desempenho?turma=321530&formato=xlsx",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"relatorios",
+								"desempenho"
+							],
+							"query": [
+								{
+									"key": "turma",
+									"value": "321530"
+								},
+								{
+									"key": "formato",
+									"value": "xlsx"
+								}
+							]
+						},
+						"description": "Gera relatório de desempenho em XLSX para a turma 321530. Requer autenticação de professor."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Set BASE_URL environment variable if not already set",
+					"if (!pm.environment.get(\"BASE_URL\")) {",
+					"    pm.environment.set(\"BASE_URL\", \"http://localhost:5000\");",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Extract session cookie after successful login",
+					"if (pm.request.url.includes(\"/api/auth/login\") && pm.response.code === 200) {",
+					"    const cookieHeader = pm.response.headers.get(\"Set-Cookie\");",
+					"    if (cookieHeader) {",
+					"        const sessionCookie = cookieHeader.split(\";\")[0];",
+					"        pm.environment.set(\"session_cookie\", sessionCookie);",
+					"    }",
+					"}",
+					"// For subsequent requests, add the session cookie",
+					"if (pm.environment.get(\"session_cookie\") && !pm.request.headers.has(\"Cookie\")) {",
+					"    pm.request.headers.add({ key: \"Cookie\", value: pm.environment.get(\"session_cookie\") });",
+					"}"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost:5000",
+			"type": "string",
+			"description": "URL base do backend da aplicação Flask"
+		}
+	]
+}
