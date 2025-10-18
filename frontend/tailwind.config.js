@@ -7,20 +7,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Paleta SENAC
-        'senac-blue': {
-          DEFAULT: '#003366',
-          dark: '#002244',
-          light: '#0066cc'
+        senac: {
+          blue: {
+            DEFAULT: "#003366",
+            dark: "#002244",
+            light: "#0066cc",
+          },
+          gray: {
+            DEFAULT: "#6b7280",
+            light: "#f3f4f6",
+            dark: "#374151",
+          },
         },
-        'senac-gray': {
-          DEFAULT: '#6b7280',
-          light: '#f3f4f6',
-          dark: '#374151'
-        }
-      }
+      },
     },
   },
   plugins: [],
-}
+};
 
